@@ -1,0 +1,17 @@
+﻿/*@!Encoding:65001*/
+includes
+{
+  
+}
+
+variables
+{
+  
+}
+
+on sysvar_update sysvar::Steering::SteeringAngle
+{
+  @sysvar::Panel::SteeringWheel = (@sysvar::Steering::SteeringAngle / 90) * 90;
+  
+  $sig_SteeringAngle = @this;
+}

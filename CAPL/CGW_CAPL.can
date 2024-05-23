@@ -18,3 +18,13 @@ on message can2.Chassis_DB::msg_BrakeInfo
   
   output(msg_forward);
 }
+
+on message can2.Chassis_DB::msg_SteeringInfo
+{
+  message Gateway_DB::msg_SteeringInfo msg_forward;
+  
+  msg_forward.sig_SteeringAngle = this.sig_SteeringAngle;
+  msg_forward.can = 4;
+  
+  output(msg_forward);
+}

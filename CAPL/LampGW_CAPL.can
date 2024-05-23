@@ -1,0 +1,40 @@
+﻿/*@!Encoding:65001*/
+includes
+{
+  
+}
+
+variables
+{
+  
+}
+
+on message can4.Gateway_DB::msg_EngineInfo
+{
+  message Lamp_DB::msg_EngineInfo msg_forward;
+  
+  msg_forward.sig_VehicleSpeed = this.sig_VehicleSpeed;
+  msg_forward.can = 3;
+  
+  output(msg_forward);
+}
+
+on message can4.Gateway_DB::msg_BrakeInfo
+{
+  message Lamp_DB::msg_BrakeInfo msg_forward;
+  
+  msg_forward.sig_BrakePress = this.sig_BrakePress;
+  msg_forward.can = 3;
+  
+  output(msg_forward);
+}
+
+on message can4.Gateway_DB::msg_SteeringInfo
+{
+  message Lamp_DB::msg_SteeringInfo msg_forward;
+  
+  msg_forward.sig_SteeringAngle = this.sig_SteeringAngle;
+  msg_forward.can = 3;
+  
+  output(msg_forward);
+}

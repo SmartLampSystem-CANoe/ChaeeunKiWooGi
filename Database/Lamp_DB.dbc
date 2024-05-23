@@ -36,6 +36,15 @@ BS_:
 BU_: Lamp_Gateway
 
 
+BO_ 0 msg_EngineInfo: 1 Lamp_Gateway
+ SG_ sig_VehicleSpeed : 0|8@1+ (1,0) [0|200] "km/h" Vector__XXX
+
+BO_ 512 msg_SteeringInfo: 2 Lamp_Gateway
+ SG_ sig_SteeringAngle : 0|11@1- (1,0) [-540|540] "degree" Vector__XXX
+
+BO_ 256 msg_BrakeInfo: 1 Lamp_Gateway
+ SG_ sig_BrakePress : 0|1@1+ (1,0) [0|1] "" Vector__XXX
+
 
 
 BA_DEF_  "DatabaseVersion" STRING ;
@@ -74,6 +83,9 @@ BA_DEF_DEF_  "GenMsgCycleTimeFast" 20;
 BA_DEF_DEF_  "GenMsgILSupport" "Yes";
 BA_DEF_DEF_  "GenMsgFastOnStart" 0;
 BA_DEF_DEF_  "GenMsgStartDelayTime" 0;
-BA_ "BusType" "CAN";
 BA_ "DatabaseVersion" "1.1";
+BA_ "BusType" "CAN";
+BA_ "GenSigSendType" SG_ 0 sig_VehicleSpeed 7;
+BA_ "GenSigSendType" SG_ 512 sig_SteeringAngle 7;
+BA_ "GenSigSendType" SG_ 256 sig_BrakePress 7;
 
