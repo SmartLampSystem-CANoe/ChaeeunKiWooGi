@@ -1,0 +1,24 @@
+﻿/*@!Encoding:65001*/
+includes
+{
+  
+}
+
+variables
+{
+  const int PRESS = 1;
+  const int UNPRESS = 0;
+}
+
+on sysvar sysvar::Brake::press
+{
+  if(@sysvar::Brake::press == PRESS) {
+    $sig_BrakePress = PRESS;
+  }
+  else if(@sysvar::Brake::press == UNPRESS) {
+    $sig_BrakePress = UNPRESS;
+  }
+  else {
+    
+  }
+}
