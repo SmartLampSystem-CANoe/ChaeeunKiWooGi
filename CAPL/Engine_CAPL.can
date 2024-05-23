@@ -1,0 +1,59 @@
+﻿/*@!Encoding:65001*/
+includes
+{
+  
+}
+
+variables
+{
+  msTimer timer50Ms;
+}
+
+on start
+{
+  setTimerCyclic(timer50Ms, 50);
+}
+
+on timer timer50Ms
+{
+  if ((@sysvar::Brake::press == 1) && (@sysvar::Engine::AccelPedalState == 1))  // brake and accel (speed no change)
+  {
+    ;
+  }
+  else if ((@sysvar::Brake::press == 1) && (@sysvar::Engine::AccelPedalState == 0))  // only brake (speed rapidly decrease)
+  {
+    @sysvar::Engine::VehicleSpeed -= 3;
+  }
+  else if ((@sysvar::Brake::press == 0) && (@sysvar::Engine::AccelPedalState == 1))  // only accel (speed increase)
+  {
+    @sysvar::Engine::VehicleSpeed += 2;
+  }
+  else if ((@sysvar::Brake::press == 0) && (@sysvar::Engine::AccelPedalState == 0))  // no brake and accel (speed gradually decrease)
+  {
+     @sysvar::Engine::VehicleSpeed -= 1;
+  }
+  else  // error (value not defined)
+  {
+    ;
+  }
+  
+  if (@sysvar::Engine::VehicleSpeed > 200)
+  {
+    @sysvar::Engine::VehicleSpeed = 200;
+  }
+  else
+  {
+    
+  }
+  
+  if (@sysvar::Engine::VehicleSpeed < 0)
+  {
+    @sysvar::Engine::VehicleSpeed = 0;
+  }
+  else
+  {
+    
+  }
+  
+  $sig_VehicleSpeed = @sysvar::Engine::VehicleSpeed;
+}

@@ -1,0 +1,20 @@
+﻿/*@!Encoding:65001*/
+includes
+{
+  
+}
+
+variables
+{
+  
+}
+
+on message can2.Chassis_DB::msg_BrakeInfo
+{
+  message Gateway_DB::msg_BrakeInfo msg_forward;
+  
+  msg_forward.sig_BrakePress = this.sig_BrakePress;
+  msg_forward.can = 4;
+  
+  output(msg_forward);
+}
