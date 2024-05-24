@@ -6,12 +6,36 @@ includes
 
 variables
 {
-  
+  msTimer sendTimer;
+}
+
+on start {
+  setTimerCyclic(sendTimer, 20);
 }
 
 on sysvar_update sysvar::Steering::SteeringAngle
 {
-  @sysvar::Panel::SteeringWheel = (@sysvar::Steering::SteeringAngle / 90) * 90;
+  @sysvar::Panel::SteeringWheel = ((@sysvar::Steering::SteeringAngle - 540) / 90) * 90;
   
   $sig_SteeringAngle = @this;
+}
+
+on timer sendTimer {
+  message C_CAN::msg_SteeringInfo sendMsg;
+  int i; 
+  
+  byte data[2];
+  dword crc;
+  data[1] = @sysvar::Steering::SteeringAngle & 0xFF;
+  data[0] = (@sysvar::Steering::SteeringAngle >> 8) & 0xFF;
+  
+  Crc_CalculateCRC8(data, elcount (data), 0, elcount (data), 0, 1, crc);
+  
+  sendMsg.sig_SteeringAngle = @sysvar::Steering::SteeringAngle;
+  sendMsg.CRC = crc;
+
+  //write("0x%2X%2X 0x%4X 0x%4X", data[0], data[1], sendMsg.sig_SteeringAngle,  @sysvar::Steering::SteeringAngle);
+  // write("%2X %2X %2X", data[1], data[0], crc);
+  
+  output(sendMsg);
 }

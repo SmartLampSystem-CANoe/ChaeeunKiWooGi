@@ -1,0 +1,41 @@
+﻿/*@!Encoding:65001*/
+includes
+{
+  
+}
+
+variables
+{
+  
+}
+
+//brake
+on message can2.C_CAN::msg_BrakeInfo 
+{
+  byte data[1];
+  dword crc;
+  data[0] = this.byte(1);
+  Crc_CalculateCRC8(data, elcount (data), 0, elcount (data), 0, 1, crc);
+  
+  /*
+  write("brake");
+  write("0x%02X", data[0]);
+  write("0x%03X", crc);
+  */
+}
+
+
+//steering
+on message can2.C_CAN::msg_SteeringInfo
+{
+  byte data[2];
+  dword crc;
+  data[1] = this.byte(1);
+  data[0] = this.byte(2);
+  Crc_CalculateCRC8(data, elcount (data), 0, elcount (data), 0, 1, crc);
+  
+  //write("0x%02X%02X 0x%04X 0x%04X 0x%04X", data[0], data[1], this.sig_SteeringAngle, this.CRC, crc);
+  write("steering");
+  write("0x%02X%02x", data[0], data[1]);
+  write("0x%03X", crc);
+}

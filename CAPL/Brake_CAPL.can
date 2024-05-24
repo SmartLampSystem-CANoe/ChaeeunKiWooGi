@@ -8,6 +8,11 @@ variables
 {
   const int PRESS = 1;
   const int UNPRESS = 0;
+  msTimer sendTimer;
+}
+
+on start {
+  setTimerCyclic(sendTimer, 20);
 }
 
 on sysvar sysvar::Brake::press
@@ -21,4 +26,19 @@ on sysvar sysvar::Brake::press
   else {
     
   }
+}
+
+
+on timer sendTimer {
+  message C_CAN::msg_BrakeInfo sendMsg;
+  
+  byte data[1];
+  dword crc;
+  data[0] = @sysvar::Brake::press;
+  Crc_CalculateCRC8(data, elcount (data), 0, elcount (data), 0, 1, crc);
+  
+  sendMsg.sig_BrakePress = @sysvar::Brake::press;
+  sendMsg.CRC = crc;
+
+  output(sendMsg);
 }
