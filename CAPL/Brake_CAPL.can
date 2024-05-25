@@ -34,10 +34,11 @@ on timer sendTimer {
   
   byte data[1];
   dword crc;
-  data[0] = @sysvar::Brake::press;
-  Crc_CalculateCRC8(data, elcount (data), 0, elcount (data), 0, 1, crc);
   
   sendMsg.sig_BrakePress = @sysvar::Brake::press;
+  
+  data[0] = sendMsg.byte(1);
+  Crc_CalculateCRC8(data, elcount (data), 0, elcount (data), 0, 1, crc);
   sendMsg.CRC = crc;
 
   output(sendMsg);

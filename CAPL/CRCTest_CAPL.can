@@ -22,6 +22,7 @@ on message can2.C_CAN::msg_BrakeInfo
   write("0x%02X", data[0]);
   write("0x%03X", crc);
   */
+  
 }
 
 
@@ -35,7 +36,9 @@ on message can2.C_CAN::msg_SteeringInfo
   Crc_CalculateCRC8(data, elcount (data), 0, elcount (data), 0, 1, crc);
   
   //write("0x%02X%02X 0x%04X 0x%04X 0x%04X", data[0], data[1], this.sig_SteeringAngle, this.CRC, crc);
+
   write("steering");
   write("0x%02X%02x", data[0], data[1]);
   write("0x%03X", crc);
+
 }

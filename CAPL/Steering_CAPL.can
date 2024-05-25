@@ -26,12 +26,12 @@ on timer sendTimer {
   
   byte data[2];
   dword crc;
-  data[1] = @sysvar::Steering::SteeringAngle & 0xFF;
-  data[0] = (@sysvar::Steering::SteeringAngle >> 8) & 0xFF;
-  
-  Crc_CalculateCRC8(data, elcount (data), 0, elcount (data), 0, 1, crc);
   
   sendMsg.sig_SteeringAngle = @sysvar::Steering::SteeringAngle;
+  data[1] = sendMsg.byte(1);
+  data[0] = sendMsg.byte(2);
+  
+  Crc_CalculateCRC8(data, elcount (data), 0, elcount (data), 0, 1, crc);
   sendMsg.CRC = crc;
 
   //write("0x%2X%2X 0x%4X 0x%4X", data[0], data[1], sendMsg.sig_SteeringAngle,  @sysvar::Steering::SteeringAngle);
