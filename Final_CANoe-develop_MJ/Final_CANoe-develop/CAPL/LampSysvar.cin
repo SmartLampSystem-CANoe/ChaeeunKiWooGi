@@ -1,0 +1,39 @@
+﻿/*@!Encoding:65001*/
+
+
+variables{
+  const int kOff = 0;
+  
+  
+}
+
+
+on sysvar_update Lamp::SYSVAR_ExtLightState/*@sysvar::Lamp::SYSVAR_DayNight!Encoding:65001*/
+{
+  //int temp = 0;
+  if(@this >20)   //Night
+  {
+    //temp = @Lamp::SYSVAR_FLampMode;
+      @Lamp::SYSVAR_DayNight = 0;
+      return;
+    
+  }
+  else             //Day
+  {
+    //@Lamp::SYSVAR_FLampMode = temp;
+    @Lamp::SYSVAR_DayNight = 1;
+    return;
+    
+  }
+   
+}
+
+on sysvar_update Steering::SYSVAR_SteeringWheelAngle
+{
+  if(@Cluster::SYSVAR_AutoLBeamAngleBtn == 1){
+  @Lamp::SYSVAR_SteeringWheelAngle = @Steering::SYSVAR_SteeringWheelAngle/9;
+  }
+  else
+    @Lamp::SYSVAR_SteeringWheelAngle = 0;
+  
+}
